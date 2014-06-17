@@ -9,9 +9,19 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		Eloquent::unguard();
+		// Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		// // $this->call('UserTableSeeder');
+
+		DB::table('admin')->insert([
+                'username'   => 'admin',
+                'email'      => 'admin@admin.com',
+                'password'   => Hash::make('admin'),
+                'first_name' => 'ร้านริน',
+                'last_name'  => 'ขนมหวาน',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
+            ]);
 	}
 
 }

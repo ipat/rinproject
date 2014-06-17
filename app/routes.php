@@ -20,3 +20,10 @@ Route::get('/hello', function()
 {
 	return View::make('hello');
 });
+
+Route::controller('/admin', 'AdminController');
+
+Route::get('/list', function()
+{
+	return View::make('list');
+});

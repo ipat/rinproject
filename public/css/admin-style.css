@@ -1,0 +1,97 @@
+@font-face {
+    font-family: 'bangna';
+    src: url('../font/wdb_bangna-webfont.eot');
+    src: url('../font/wdb_bangna-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/wdb_bangna-webfont.woff') format('woff'),
+         url('../font/wdb_bangna-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body{
+	font-family: 'bangna' !important;
+	padding-top: 2	0px;
+}
+
+/* -- Style for ADMIN Dashboard --*/
+.nav-style{
+	background-color: #F5C92E;
+	border-bottom: 0.5em solid #ECAD1C;
+}
+
+.sidebar {
+  	top: 50px;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+	font-size: 1.5em;
+  	padding-right: 20px;
+  	padding-left: 20px;
+}
+.nav-sidebar > .active > a {
+  	color: #fff;
+  	background-color: #F5C92E;
+	/*border-bottom: 0.5em solid #ECAD1C;*/
+}
+
+.nav-sidebar > li > a:hover {
+  	background-color: #F9DE84;
+}
+
+.main{
+	padding: 20px;
+}
+
+.btn-yellow{	
+	background-color: #F5C92E; 
+}
+
+.float-right{
+	position: relative;
+	float:right;
+	font-size: 1.2em;
+	top:-3em;
+}
+
+.red{
+	color: red;
+}
+
+.preview-thumb{
+	height: 200px;
+	width: 200px;
+}
+
+.white{
+	color: white !important;
+}
+
+.gray{
+	color: gray;
+}
+
+.text-center{
+	text-align: center;
+}
