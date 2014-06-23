@@ -43,10 +43,7 @@
 				<!-- ====== Content ====== -->
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<div class="page-header">
-						<h1>จัดการ Order</h1>
-						<div class="pull-right">
-							<div class="btn btn-yellow float-right"><a class="white" href="<?php echo $url . '/admin/adddessert' ?>"><i class="fa fa-plus"></i> เพิ่มขนมหวาน</a></div>
-						</div>						
+						<h1>จัดการ Order</h1>					
 					</div>
 					<?php if($errors->has()): ?>
 						<?php foreach($errors->all() as $error): ?>
@@ -63,32 +60,32 @@
 						<thead>
 							<tr>
 								<th>No.</th>
-								<th>รูปภาพ</th>
-								<th>ชื่อสินค้า</th>
-								<th>รายละเอียดสินค้า</th>
-								<th>ราคา</th>
-								<th>แก้ไข</th>
-								<th>ลบ</th>
+								<th>Order Code</th>
+								<th>ชื่อผู้สั่งสินค้า</th>
+								<th>เบอร์โทร</th>
+								<th>ราคารวม</th>
+								<th>ที่อยู่</th>
+								<th>ดูรายละเอียด</th>
 							</tr>
 							
 						</thead>
 						<tbody>
-							<?php $desserts = DB::table('dessert')->get(); $emptyDessert = sizeof($desserts) == 0?>
-							<?php foreach($desserts as $dessert): ?>
+							<?php $orders = DB::table('order')->get(); $emptyOrder = sizeof($orders) == 0?>
+							<?php foreach($orders as $order): ?>
 								<tr>
-									<td><?php echo $dessert->id ?></td>
-									<td><img src="<?php echo $dessert->image_url ?>" alt="<?php echo $dessert->name ?>" class="img-thumbnail preview-thumb"></td>
-									<td><?php echo $dessert->name ?></td>
-									<td><?php echo $dessert->description ?></td>
-									<td><?php echo $dessert->price ?> บาท</td>
-									<td><a href="<?php echo $url . '/admin/editdessert/' . $dessert->id  ?>" >แก้ไข</a></td>
-									<td><a data-href="<?php echo $url . '/admin/earsedessert/' . $dessert->id  ?>" data-dessertName="<?php echo $dessert->name ?>" data-toggle="modal" data-target="#myModal" href="#">ลบ</a></td>
+									<td><?php echo $order->id ?></td>
+									<td><?php echo $order->order_code ?></td>
+									<td><?php echo $order->name ?></td>
+									<td><?php echo $order->phone ?></td>
+									<td><?php echo $order->total_price ?> บาท</td>
+									<td><?php echo $order->address ?></td>
+									<td>รอก่อน</td>
 								</tr>
 							<?php endforeach ?>
 						</tbody>
 					</table>
-					<?php if($emptyDessert): ?>
-						<h3 class="text-center">ยังไม่มีขนมหวานเลยอะคับ</h3>
+					<?php if($emptyOrder): ?>
+						<h3 class="text-center">ยังไม่มี Order ครับ</h3>
 					<?php endif; ?>
 
 				</div>
