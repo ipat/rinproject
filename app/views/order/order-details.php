@@ -69,15 +69,15 @@
 				</table>
 
 				<h3>สถานะการสั่งซื้อ</h3>
-				<?php if(!$order->report) : ?>
+				<?php if(!$order->transfer) : ?>
 					<div class="alert alert-warning">
 						รอการยืนยันการโอนเงินจากผู้สั่งสินค้า
 						<hr>
 						<a class="btn btn-yellow black" href="<?php echo $url ?>/confirm-transfer">ยืนยันการโอนเงิน</a>
 					</div>
-				<?php elseif($order->report && !$order->confirm) : ?>
+				<?php elseif($order->transfer && !$order->confirm) : ?>
 					<div class="alert alert-warning">กำลังตรวจสอบความถูกต้องของการโอนเงิน</div>
-				<?php elseif($order->report && $order->confirm) : ?>
+				<?php elseif($order->transfer && $order->confirm) : ?>
 					<div class="alert alert-success">การสั่งซื้อเสร็จสิ้น รอรับสินค้าได้เลย</div>
 				<?php endif; ?>
 

@@ -81,6 +81,34 @@
 									<td><?php echo $order->address ?></td>
 									<td>รอก่อน</td>
 								</tr>
+								<tr>
+									<td colspan="7">
+										<div class="col-md-10 col-md-offset-1">
+											<table class="table table-striped">
+												<thead>
+													<tr>
+														<th class="col-md-6">ชื่อสินค้า</th>
+														<th class="col-md-2">จำนวน</th>
+														<th class="col-md-2">ราคา/ชิ้น</th>
+														<th class="col-md-2">เป็นเงิน</th>
+													</tr>
+												</thead>
+												<?php foreach(json_decode($order->order) as $index => $item): ?>
+													<tr>
+														<td><?php echo $item->name ?></td>
+														<td><?php echo $item->amount ?> ชิ้น</td>
+														<td><?php echo $item->price ?> บาท</td>
+														<td><?php echo  ($item->amount) * ($item->price);?> บาท</td>
+													</tr>
+												<?php endforeach; ?>
+													<tr class="warning">
+														<th colspan="3">รวมเป็นเงิน</th>
+														<th><?php echo $order->total_price ?> บาท</th>
+													</tr>
+											</table>
+										</div>
+									</td>
+								</tr>
 							<?php endforeach ?>
 						</tbody>
 					</table>

@@ -33,7 +33,7 @@ Route::get('/list', function()
 // Show submit-order page
 Route::get('/submit-order', function()
 {
-	return View::make('order-submit');
+	return View::make('order/order-submit');
 });
 // Mange order data and put it in database
 Route::post('/submit-order', function()
@@ -98,23 +98,127 @@ Route::post('/submit-order', function()
 
 Route::get('order-details/{id}', function($id)
 {
-	return View::make('order-details')->with(array('id'=>$id));
+	return View::make('order/order-details')->with(array('id'=>$id));
 });
 
 Route::get('confirm-transfer', function()
 {
-	return "ยังไม่มีนะจ๊ะ อิอิ";
+	return View::make('order/confirm-transfer');
+});
+
+Route::post('confirm-transfer', function()
+{
+	$order_code = Input::get('order-id');
+
+	$sent_from = Input::get('send-from-bank');
+	$sent_to = Input::get('send-to-bank');
+	$amount = Input::get("amount");
+	$date = Input::get("date");
+	$time = Input::get("time");
+	$picture = Input::file("picture");
+
+	$data = array(
+		'sent_from' => $sent_from,
+		'sent_to' => $sent_to,
+		'amount' => $amount,
+		'date' => $date,
+		'time' => $time,
+		'picture' => $picture);
+
+	$destinationPath = 'upload/transfer/';
+
+	$rules = array(
+		'sent_from' => 'required',
+		'sent_to' => 'required',
+		'amount' => 'numeric|required',
+		'date' => 'date|required',
+		'time' => 'required',
+		'picture' => 'image');
+
+	$messages = array(
+		'sent_from.required' => "กรุณาเลือกธนาคารที่โอนมา",
+		'sent_to.required' => "กรุณาเลือกธนาคารปลายทาง",
+		'amount.required' => "กรุณาใส่จำนวนเงินที่โอนมา",
+		'amount.numeric' => "กรุณาใส่จำนวนเงินเป็นตัวเลข",
+		'date.date' => "กรุณาเลือกวันที่ให้ถูกต้อง",
+		'date.required' => "กรุณาเลือกวันที่",
+		'picture.image' => "กรุณาเลือกไฟล์ที่เป็นรูปภาพ",
+		'time.required' => "กรุณาใส่เวลาที่ทำการโอน");
+
+	$validator = Validator::make($data, $rules, $messages);
+
+	if($validator->fails()){
+		return Response::json([
+			'success'=> false, 
+			'error' => $validator->errors()->toArray()]);
+	}
+
+
+	$order_id = Input::get('order'); // In format of number
+	$order_code = Input::get('order_code'); // In format of RINXXXX
+
+	if(!is_null($picture)) {
+		$file_name = $order_code . '.' . $picture->getClientOriginalExtension();
+		$upload_success = $picture->move($destinationPath, $file_name);		
+		$picture_url = URL::to('') . '/' . $destinationPath . $file_name;
+	} else 
+		$picture_url = "";
+
+
+
+
+	DB::table('confirm-transfer')->insert(
+		array( 'sent_from' => $sent_from,
+			   'sent_to' => $sent_to,
+			   'order_id' => $order_id,
+			   'amount' => $amount,
+			   'picture_url' => $picture_url,
+			   'date' => $date,
+			   'time' => $time));
+
+
+	DB::table('order')
+		->where('id', $order_id)
+		->update(
+			array('transfer' => 1));
+
+	return Response::json(['success' => true, 'debug' => $picture]);
+
+
+
 });
 
 Route::get('search-order', function()
 {
-	return View::make('search-order');
+	return View::make('order/search-order');
 });
 
 Route::post('search-order', function()
 {
 	return Redirect::to('order-details/' . Input::get('search', ''));
 });
+
+//Return order details in JSON file
+Route::get('get-order-details/{id}', function($id)
+{
+	$details = DB::table('order')->where('order_code', $id)->get();
+	return json_encode($details);
+});
+
+//Return bank account in JSON file
+Route::get('get-bank-account', function()
+{
+	$bank = DB::table('bank-account')->get();
+	return json_encode($bank);
+});
+
+//Return bank name in JSON file
+Route::get('get-bank-name', function()
+{
+	$bank = DB::table('bank')->get();
+	return json_encode($bank);
+});
+
 
 
 // Validator for PHONE
