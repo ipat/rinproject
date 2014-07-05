@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2014 at 02:00 PM
+-- Generation Time: Jul 05, 2014 at 04:43 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `confirm-transfer` (
   `time` time NOT NULL,
   `submitted_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `confirm-transfer`
@@ -116,7 +116,9 @@ CREATE TABLE IF NOT EXISTS `confirm-transfer` (
 
 INSERT INTO `confirm-transfer` (`id`, `order_id`, `sent_from`, `sent_to`, `amount`, `picture_url`, `date`, `time`, `submitted_time`) VALUES
 (1, 1, 2, 1, 230.1, '', '2014-07-18', '11:11:00', '2014-07-04 11:12:02'),
-(2, 10, 0, 1, 62, 'http://localhost/rinproject/public/upload/transfer/RIN6915.jpg', '2014-07-03', '13:21:00', '2014-07-04 11:12:59');
+(2, 10, 0, 1, 62, 'http://localhost/rinproject/public/upload/transfer/RIN6915.jpg', '2014-07-03', '13:21:00', '2014-07-04 11:12:59'),
+(3, 6, 0, 1, 190, 'http://localhost/rinproject/public/upload/transfer/RIN8285.jpg', '2014-07-18', '12:12:00', '2014-07-05 14:24:50'),
+(4, 12, 0, 1, 3, 'http://localhost/rinproject/public/upload/transfer/RIN9239.jpg', '2014-07-19', '11:11:00', '2014-07-05 14:38:55');
 
 -- --------------------------------------------------------
 
@@ -180,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   `confirm` tinyint(1) NOT NULL COMMENT 'ยืนยันการส่งสินค้าแล้วหรือไม่',
   `submitted_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `order`
@@ -189,11 +191,14 @@ CREATE TABLE IF NOT EXISTS `order` (
 INSERT INTO `order` (`id`, `order_code`, `name`, `address`, `phone`, `order`, `total_price`, `seen`, `transfer`, `confirm`, `submitted_time`) VALUES
 (1, 'RIN1642', 'asdf', 'dfdasafas', '081-1111111', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":4},{"id":3,"name":"\\u0e02\\u0e19\\u0e21\\u0e0a\\u0e31\\u0e49\\u0e19","description":"\\u0e02\\u0e19\\u0e21\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2b\\u0e25\\u0e32\\u0e01\\u0e2a\\u0e35\\u0e2b\\u0e25\\u0e32\\u0e22\\u0e2a\\u0e44\\u0e15\\u0e25\\u0e4c \\u0e40\\u0e2b\\u0e21\\u0e32\\u0e30\\u0e01\\u0e30\\u0e27\\u0e31\\u0e22\\u0e27\\u0e48\\u0e49\\u0e32\\u0e27\\u0e38\\u0e48\\u0e21\\u0e21\\u0e32\\u0e01\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/3.jpg","amount":2},{"id":4,"name":"\\u0e02\\u0e19\\u0e21\\u0e01\\u0e25\\u0e49\\u0e27\\u0e22","description":"\\u0e17\\u0e33\\u0e40\\u0e2d\\u0e07\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22\\u0e21\\u0e32\\u0e01","price":10,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/4.jpg","amount":5}]', 230, 0, 1, 0, '2014-07-04 10:53:35'),
 (5, 'RIN3703', 'นางไก่กา อาราเล่', 'บ้านเดอกเตอร์สลัม', '080-0000000', '[{"id":4,"name":"\\u0e02\\u0e19\\u0e21\\u0e01\\u0e25\\u0e49\\u0e27\\u0e22","description":"\\u0e17\\u0e33\\u0e40\\u0e2d\\u0e07\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22\\u0e21\\u0e32\\u0e01","price":10,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/4.jpg","amount":4}]', 40, 0, 0, 0, '2014-07-04 10:53:35'),
-(6, 'RIN8285', 'นายทอง ดีออก', 'บ้านดีออก', '012-3456789', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":5}]', 150, 0, 0, 0, '2014-07-04 10:53:35'),
+(6, 'RIN8285', 'นายทอง ดีออก', 'บ้านดีออก', '012-3456789', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":5}]', 150, 0, 1, 0, '2014-07-04 10:53:35'),
 (7, 'RIN5180', 'นายฝอยทอง ขนมชั้น', 'ทุกที่', '080-0000000', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":2},{"id":3,"name":"\\u0e02\\u0e19\\u0e21\\u0e0a\\u0e31\\u0e49\\u0e19","description":"\\u0e02\\u0e19\\u0e21\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2b\\u0e25\\u0e32\\u0e01\\u0e2a\\u0e35\\u0e2b\\u0e25\\u0e32\\u0e22\\u0e2a\\u0e44\\u0e15\\u0e25\\u0e4c \\u0e40\\u0e2b\\u0e21\\u0e32\\u0e30\\u0e01\\u0e30\\u0e27\\u0e31\\u0e22\\u0e27\\u0e48\\u0e49\\u0e32\\u0e27\\u0e38\\u0e48\\u0e21\\u0e21\\u0e32\\u0e01\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/3.jpg","amount":2}]', 120, 0, 0, 0, '2014-07-04 10:53:35'),
 (8, 'RIN1342', 'ฝอยทอง', 'aaaaaaaaaaaaa', '080-0000000', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":5},{"id":4,"name":"\\u0e02\\u0e19\\u0e21\\u0e01\\u0e25\\u0e49\\u0e27\\u0e22","description":"\\u0e17\\u0e33\\u0e40\\u0e2d\\u0e07\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22\\u0e21\\u0e32\\u0e01","price":10,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/4.jpg","amount":2}]', 170, 0, 0, 0, '2014-07-04 10:53:35'),
 (9, 'RIN5683', 'จริงดี อร่อยหวะ', 'อร่อยนะ', '080-0000000', '[{"id":4,"name":"\\u0e02\\u0e19\\u0e21\\u0e01\\u0e25\\u0e49\\u0e27\\u0e22","description":"\\u0e17\\u0e33\\u0e40\\u0e2d\\u0e07\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22\\u0e21\\u0e32\\u0e01","price":10,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/4.jpg","amount":2},{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":6}]', 200, 0, 0, 0, '2014-07-04 10:53:35'),
-(10, 'RIN6915', 'กรุงเทพ มหานคร', 'อมรรัตนโกสินทร์', '012-3456789', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":2}]', 60, 0, 1, 0, '2014-07-04 10:53:35');
+(10, 'RIN6915', 'กรุงเทพ มหานคร', 'อมรรัตนโกสินทร์', '012-3456789', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":2}]', 60, 0, 1, 0, '2014-07-04 10:53:35'),
+(11, 'RIN3676', 'นางสาวโดเรมี โอโห', '123 บ้านแมว หนูมา', '012-3456789', '[{"id":2,"name":"\\u0e02\\u0e49\\u0e32\\u0e27\\u0e21\\u0e31\\u0e19\\u0e44\\u0e01\\u0e48","description":"\\u0e02\\u0e2d\\u0e07\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e16\\u0e39\\u0e01\\u0e43\\u0e08 \\u0e43\\u0e0a\\u0e48\\u0e2b\\u0e23\\u0e2d?","price":40,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/2.jpg","amount":2},{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":2},{"id":4,"name":"\\u0e02\\u0e19\\u0e21\\u0e01\\u0e25\\u0e49\\u0e27\\u0e22","description":"\\u0e17\\u0e33\\u0e40\\u0e2d\\u0e07\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22\\u0e21\\u0e32\\u0e01","price":10,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/4.jpg","amount":4}]', 180, 0, 0, 0, '2014-07-05 14:27:49'),
+(12, 'RIN9239', 'ฝอยทอง', '1111', '012-3456789', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":2}]', 60, 0, 1, 0, '2014-07-05 14:30:21'),
+(13, 'RIN2144', 'asd', 'ๅๅๅๅๅ', '081-1111111', '[{"id":1,"name":"\\u0e1d\\u0e2d\\u0e22\\u0e17\\u0e2d\\u0e07","description":"\\u0e2b\\u0e27\\u0e32\\u0e19\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2a\\u0e38\\u0e14\\u0e46\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/1.jpg","amount":2},{"id":3,"name":"\\u0e02\\u0e19\\u0e21\\u0e0a\\u0e31\\u0e49\\u0e19","description":"\\u0e02\\u0e19\\u0e21\\u0e2d\\u0e23\\u0e48\\u0e2d\\u0e22 \\u0e2b\\u0e25\\u0e32\\u0e01\\u0e2a\\u0e35\\u0e2b\\u0e25\\u0e32\\u0e22\\u0e2a\\u0e44\\u0e15\\u0e25\\u0e4c \\u0e40\\u0e2b\\u0e21\\u0e32\\u0e30\\u0e01\\u0e30\\u0e27\\u0e31\\u0e22\\u0e27\\u0e48\\u0e49\\u0e32\\u0e27\\u0e38\\u0e48\\u0e21\\u0e21\\u0e32\\u0e01\\u0e2d\\u0e30","price":30,"image_url":"http:\\/\\/localhost\\/rinproject\\/public\\/upload\\/images\\/3.jpg","amount":2}]', 120, 0, 0, 0, '2014-07-05 14:34:09');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

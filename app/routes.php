@@ -86,12 +86,12 @@ Route::post('/submit-order', function()
 				'order' => json_encode($cart),
 				'total_price' => $totalPrice,
 				'seen' => false,
-				'report' => false,
+				'transfer' => false,
 				'confirm' => false));
 	//------- Unset Cart ----------
 	setcookie('cart', null);
 
-	return Redirect::to('order-details/' . $gencode)->with('message', 'ยืนยันการสั่งซื้อเรียบร้อย หากทำการโอนเงินแล้วไปที่หน้า <a href="' . URL::to('') . '/confirm-transfer">ยืนยันการโอนเงิน</a>');
+	return Redirect::to('order-details/' . $gencode)->with('message', 'ยืนยันการสั่งซื้อเรียบร้อย หากทำการโอนเงินแล้วยืนยันการโองเงินด้านล่าง <b>หากต้องการยืนยันภายหลัง ให้ไปที่หน้าค้นหาแล้วพิมพ์รหัสการสั่งซื้อลงไปเมื่อท่านต้องการยืนยัน</b> ');
 	
 
 });
@@ -101,10 +101,6 @@ Route::get('order-details/{id}', function($id)
 	return View::make('order/order-details')->with(array('id'=>$id));
 });
 
-Route::get('confirm-transfer', function()
-{
-	return View::make('order/confirm-transfer');
-});
 
 Route::post('confirm-transfer', function()
 {
@@ -190,12 +186,7 @@ Route::post('confirm-transfer', function()
 
 Route::get('search-order', function()
 {
-	return View::make('order/search-order');
-});
-
-Route::post('search-order', function()
-{
-	return Redirect::to('order-details/' . Input::get('search', ''));
+	return View::make('order/order-details');
 });
 
 //Return order details in JSON file

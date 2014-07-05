@@ -10,8 +10,7 @@
                 margin-top: 2%;
             }
         </style>
-        <title>Order : <?php echo $id ?> | Rin Website</title>
-        <?php $order = DB::table('order')->where('order_code', $id)->first(); ?>
+        <title>Order Details | Rin Website</title>
 	</head>
 	<body>
 
@@ -28,64 +27,93 @@
 				<div class="bg-success alert"><?php echo Session::get('message') ?></div>
 			<?php endif; ?>
 			<!-- Show Order Details -->
-			<?php if(!is_null($order)) : ?>
-				<dl class="dl-horizontal">
-					<dt>รหัส Order</dt>
-					<dd><?php echo $order->order_code ?></dd>
-
-					<dt>ชื่อผู้สั่ง</dt>
-					<dd><?php echo $order->name ?></dd>
-
-					<dt>ที่อยู่ที่จัดส่ง</dt>
-					<dd><?php echo $order->address ?></dd>
-
-					<dt>เบอร์โทรศัพท์</dt>
-					<dd><?php echo $order->phone; ?></dd>
-
-				</dl>
-				<h3>รายการสินค้าที่สั่งซื้อ</h3>
-
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th class="col-md-6">ชื่อสินค้า</th>
-							<th class="col-md-2">จำนวน</th>
-							<th class="col-md-2">ราคา/ชิ้น</th>
-							<th class="col-md-2">เป็นเงิน</th>
-						</tr>
-					</thead>
-					<?php foreach(json_decode($order->order) as $index => $item): ?>
-						<tr>
-							<td><?php echo $item->name ?></td>
-							<td><?php echo $item->amount ?> ชิ้น</td>
-							<td><?php echo $item->price ?> บาท</td>
-							<td><?php echo  ($item->amount) * ($item->price);?> บาท</td>
-						</tr>
-					<?php endforeach; ?>
-						<tr class="warning">
-							<th colspan="3">รวมเป็นเงิน</th>
-							<th><?php echo $order->total_price ?> บาท</th>
-						</tr>
-				</table>
-
-				<h3>สถานะการสั่งซื้อ</h3>
-				<?php if(!$order->transfer) : ?>
-					<div class="alert alert-warning">
-						รอการยืนยันการโอนเงินจากผู้สั่งสินค้า
-						<hr>
-						<a class="btn btn-yellow black" href="<?php echo $url ?>/confirm-transfer">ยืนยันการโอนเงิน</a>
+			<form action="" method="POST" class="form-horizontal">
+				<div class="form-group row">
+					<label for="order-id" class="col-md-2 control-label">รหัส Order</label>
+					<div class="col-md-6">
+						<input type="text" id="order-id" name="order_code" class="form-control" value="<?php echo isset($id)? $id: ''; ?>" placeholder="RINXXXX">	
 					</div>
-				<?php elseif($order->transfer && !$order->confirm) : ?>
-					<div class="alert alert-warning">กำลังตรวจสอบความถูกต้องของการโอนเงิน</div>
-				<?php elseif($order->transfer && $order->confirm) : ?>
-					<div class="alert alert-success">การสั่งซื้อเสร็จสิ้น รอรับสินค้าได้เลย</div>
-				<?php endif; ?>
+					<div class="check-order"></div>
+				</div>
+				<div class="slide-data col-md-12">
+					<dl class="dl-horizontal col-md-offset-3">
+						<dt>รหัส Order</dt>
+						<dd class="order-id"></dd>
 
+						<dt>ชื่อผู้สั่ง</dt>
+						<dd class="name"></dd>
 
+						<dt>ที่อยู่ที่จัดส่ง</dt>
+						<dd class="address"></dd>
 
-			<?php else : ?>
-				<h3>ไม่พบ Order นี้</h3>
-			<?php endif; ?>
+						<dt>เบอร์โทรศัพท์</dt>
+						<dd class="phone"></dd>
+					
+					</dl>
+					<table class="order-list table table-striped">
+	                    <thead>
+	                        <tr>
+	                            <th class="col-md-6">ชื่อสินค้า</th>
+	                            <th class="col-md-2">จำนวน</th>
+	                            <th class="col-md-2">ราคา/ชิ้น</th>
+	                            <th class="col-md-2">เป็นเงิน</th>
+	                        </tr>
+	                    </thead>
+	                </table>
+
+					<input type="hidden" class="order" name="order">
+					<div class="status"></div>
+				</div>
+
+				<div class="slide-form col-md-6 col-md-offset-3" name="slide-form">
+					<div class="page-header"><h2>ยืนยันการโอนเงิน</h2></div>
+
+					<!-- Input - Transfer to	 -->
+					<div class="form-group">
+						<label for="send-to-bank">โอนไปยังบัญชี <sup class="red">*</sup></label>
+						<select name="send-to-bank" id="send-to-bank" class="form-control">							
+						</select>
+					</div>
+					<!-- Input - Amount -->
+					<div class="form-group">
+						<label for="amount">จำนวนเงิน <sup class="red">*</sup></label>
+						<div class="input-group">					      
+					      	<input class="form-control" type="number" name="amount" id="amount" step="any" placeholder="XXX.XX">
+					      	<div class="input-group-addon">บาท</div>
+					    </div>
+					</div>
+					<!-- Input - Transfer from -->
+					<div class="form-group">
+						<label for="send-from-bank">โอนจากธนาคาร <sup class="red">*</sup></label>
+						<select name="send-from-bank" id="send-from-bank" class="form-control">							
+						</select>
+					</div>
+					<!-- Input - Date of Transfer -->
+					<div class="form-group">
+						<label for="date">วันที่โอน <sup class="red">*</sup></label>
+						<div class="input-group">
+							<div class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></div>
+							<input type="date" name="date" id="date" class="form-control">
+						</div>
+					</div>
+					<!-- Input - Time of Transfer -->
+					<div class="form-group">
+						<label for="time">เวลาที่โอน <sup class="red">*</sup></label>
+						<div class="input-group">
+							<div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
+							<input type="time" name="time" id="time" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="picture">หลักฐานการโอน (ถ้ามี)</label>
+						<input type="file" name="picture" id="picture" class="form-control">
+					</div>
+					<div class="form-group text-center">
+						<input type="submit" class="btn btn-yellow" value="ยืนยันการโอนเงิน">
+					</div>
+				</div>				
+				
+			</form>
 
 
 		</div>
@@ -95,5 +123,6 @@
 	</body>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="<?php echo $url; ?>/js/query-order.js"></script>
 
 </html>

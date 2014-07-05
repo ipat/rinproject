@@ -1,3 +1,6 @@
+
+var host = window.location.origin + '/rinproject/public';
+
 $(document).ready(function() {
 	
 	$('.slide-data').css('display', 'none');
@@ -15,6 +18,9 @@ $(document).ready(function() {
 		}
 	});
 
+	if($('#order-id').val() != '')
+		checkDatabase();
+
 	$(window).keydown(function(event){
 	    if( (event.keyCode == 13) ) {
 	      event.preventDefault();
@@ -28,7 +34,7 @@ $(document).ready(function() {
 		var formData  = new FormData(this);
 
 		$.ajax({
-			url: 'confirm-transfer',
+			url: host + '/confirm-transfer',
 			type: 'POST',
 			dataType: 'json',
 			data: formData,
@@ -61,7 +67,9 @@ $(document).ready(function() {
 			
 		})
 		.error(function() {
-			console.log("Error");
+			$(".status")
+					.empty()
+					.append('<div class="alert alert-danger showMsg text-center"><h3>เกิดข้อผิดพลาด</h3></div>');
 		});
 		
 	});
@@ -71,7 +79,7 @@ $(document).ready(function() {
 
 function checkDatabase(){
 	$.ajax({
-		url: 'get-order-details/' + $('#order-id').val(),
+		url: host + '/get-order-details/' + $('#order-id').val(),
 		type: 'GET',
 		dataType: 'json'
 	})
@@ -95,15 +103,19 @@ function checkDatabase(){
 			$(".phone")
 				.empty()
 				.append(order["phone"].substring(0,8) + "XXX");
-			$(".amount")
-				.empty()
-				.append(order["total_price"] + " บาท");
 			$(".order")
 				.val(order["id"]);
+			//Insert Order List
+			$(".order-list").find("tr:gt(0)").remove();
+			var order_list = $.parseJSON(order["order"]);
+			$.each(order_list, function(index, val) {
+					$('.order-list tr:last').after('<tr><th>' + val["name"] + '</th><th>' + val['amount'] +'</th><th>'+ val['price'] +' บาท</th><th>' + (val['price'] * val['amount']) +' บาท</th></tr>');
+			});
+			$('.order-list tr:last').after('<tr class="warning"><th colspan="3">รวมเป็นเงิน</th><th class="amount">' + order["total_price"] + ' บาท</th></tr>');
 
 			//Get Bank Acoount Data
 			$.ajax({
-				url: 'get-bank-account',
+				url: host +  '/get-bank-account',
 				type: 'GET',
 				dataType: 'json'
 			})
@@ -132,12 +144,16 @@ function checkDatabase(){
 
 			$(".slide-data").slideDown('400');
 
-			if(order['transfer'] == 0)
+			if(order['transfer'] == 0) {
 				$(".slide-form").slideDown('400');
-			else 
+				$(".status").empty();
+			}
+			else {
 				$(".status")
 					.empty()
-					.append('<h3>คุณทำการยืนยันโอนเงินเรียบร้อยแล้ว</h3>');
+					.append('<h3 class="alert alert-success text-center">คุณทำการยืนยันการโอนเงินเรียบร้อยแล้ว</h3>');
+				$(".slide-form").slideUp('400');
+			}
 			
 		}
 	});
