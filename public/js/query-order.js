@@ -148,10 +148,15 @@ function checkDatabase(){
 				$(".slide-form").slideDown('400');
 				$(".status").empty();
 			}
-			else {
+			else if(order['confirm'] == 0) {
 				$(".status")
 					.empty()
-					.append('<h3 class="alert alert-success text-center">คุณทำการยืนยันการโอนเงินเรียบร้อยแล้ว</h3>');
+					.append('<h3 class="alert alert-info text-center">คุณทำการยืนยันการโอนเงินเรียบร้อยแล้ว<br />รอการยืนยันการจัดส่งจากทางร้านค้า</h3>');
+				$(".slide-form").slideUp('400');
+			} else {
+				$(".status")
+					.empty()
+					.append('<h3 class="alert alert-success text-center">รอรับสินค้าได้เลย ทางร้านกำลังจัดส่งไปให้ท่านทางที่อยู่ที่ท่านได้กรอกไว้</h3>');
 				$(".slide-form").slideUp('400');
 			}
 			

@@ -192,11 +192,41 @@ class AdminController extends BaseController {
 		return Redirect::to('admin/managedessert')->with('message', 'ลบข้อมูลเรียบร้อย');
 	}
 
-	public function getManageorder()
+	public function getManageorder($sort = "date", $page = "1")
 	{
-		return View::make('admin.order.manage-order');
+		return View::make('admin.order.manage-order', array('sort' => $sort, 'page' => $page));
 	}
 
+	public function getOrderdetails($order_code)
+	{
+		DB::table('order')->where('order_code', $order_code)->update(array('seen' => 1));
+		return View::make('admin.order.order-details', array('order_code' => $order_code));
+	}
+
+	public function getEraseorder($id)
+	{
+		$file_name = DB::table('confirm-transfer')->where('order_id', $id)->first()->picture_url;
+		DB::table('order')->where('id', $id)->delete();
+		DB::table('confirm-transfer')->where('order_id', $id)->delete();
+		$file_name = strstr($file_name, 'upload');
+		File::delete($file_name);
+		return Redirect::to('admin/manageorder')->with('message', 'ลบข้อมูลของ Order เรียบร้อย');
+	}
+
+
+	public function getToggleconfirm($id)
+	{
+		$order = DB::table('order')->where('id', $id)->first();
+		$confirm = $order->confirm;
+		if($confirm) {
+			$confirm = DB::table('order')->where('id', $id)->update(array('confirm'=>0));
+			return Redirect::to('admin/manageorder')->with('message', 'ยืนยัน Order ' . $order->order_code . ' ในการจัดส่งเรียบร้อย');
+		}else {
+			$confirm = DB::table('order')->where('id', $id)->update(array('confirm'=>1));
+			return Redirect::to('admin/manageorder')->with('message', 'ยกเลิกยืนยัน Order ' . $order->order_code . ' ในการจัดส่งเรียบร้อย');
+		}
+
+	}
 
 
 }

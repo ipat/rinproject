@@ -100,6 +100,14 @@ body{
 	text-align: center;
 }
 
+.text-left{
+  text-align: left;
+}
+
 dd {
   padding-bottom: 0.5em;
+}
+
+.row-striped{
+  background-color: #F2C07D;
 }
