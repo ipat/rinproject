@@ -129,7 +129,7 @@ function checkDatabase(){
 			});
 
 			$.ajax({
-				url: 'get-bank-name',
+				url: host + '/get-bank-name',
 				type: 'GET',
 				dataType: 'json'
 			})
@@ -138,6 +138,7 @@ function checkDatabase(){
 				$.each(data, function(index, val) {
 					$("#send-from-bank")
 						.append("<option value='" + val['id'] + "'>" + val['bank_name'] + "</option>");
+					//alert(val['bank_name']);
 				});
 				
 			});

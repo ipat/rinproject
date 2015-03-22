@@ -68,11 +68,20 @@ body{
 	background-color: #F5C92E; 
 }
 
-.float-right{
-	position: relative;
+.float-right-up{
+  float:right;
+  font-size: 1.2em;
+  position: relative;
+  top: -3em;
+}
+
+.float-right{ 
 	float:right;
 	font-size: 1.2em;
-	top:-3em;
+}
+
+.float:left{
+  float:left;
 }
 
 .red{
@@ -110,4 +119,8 @@ dd {
 
 .row-striped{
   background-color: #F2C07D;
+}
+
+.clear{
+  clear:both;
 }
